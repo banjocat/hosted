@@ -1,3 +1,5 @@
 ---
 
 - include: nginx.yml
+- include: mesos-master.yml
+

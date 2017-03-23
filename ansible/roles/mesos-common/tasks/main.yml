@@ -1,0 +1,19 @@
+---
+
+- name: Add mesos key
+  apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: E56151BF
+  tags:
+      - mesos
+
+- name: Add mesos repo
+  apt_repository:
+      repo: deb http://repos.mesosphere.com/ubuntu xenial main
+  tags:
+      - mesos
+
+- name: Add mesos
+  apt: name=mesos
+  tags:
+      - mesos

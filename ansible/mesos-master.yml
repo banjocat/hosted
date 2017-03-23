@@ -1,0 +1,10 @@
+---
+
+- name: Mesos master
+  hosts: mesos-master
+  roles:
+      - common
+      - zookeeper
+      - mesos-common
+      - mesos-master
+      - marathon

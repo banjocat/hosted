@@ -1,0 +1,9 @@
+---
+
+- name: Install zookeeper
+  apt: name=zookeeper
+  notify:
+      - Restart zookeeper
+  tags:
+      - zookeeper
+      - mesos

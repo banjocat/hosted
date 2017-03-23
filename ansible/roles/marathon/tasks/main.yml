@@ -1,0 +1,9 @@
+---
+
+- name: Install marathon
+  apt: name=marathon
+  notify:
+      - Restart marathon
+  tags:
+      - mesos
+      - marathon
