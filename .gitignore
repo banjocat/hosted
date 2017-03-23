@@ -1,1 +1,4 @@
+vault-pass
+*.retry
+*.pyc
 

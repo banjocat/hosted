@@ -1,0 +1,45 @@
+---
+
+- name: Allow SSH port
+  ufw:
+      rule: allow
+      port: 22
+      proto: tcp
+
+- name: Deny all other ports
+  ufw:
+      rule: deny
+
+- name: Start ufw for awesome firewalling
+  ufw:
+      state: enabled
+
+- name: Setup hostname
+  hostname:
+      name: "{{host_name}}"
+
+- name: Install base packages
+  apt: name={{item}}
+  with_items:
+      - tar
+      - wget
+      - git
+      - libxt-dev
+      - libffi-dev
+      - python-pip
+      - openjdk-8-jdk
+      - libssl-dev
+      - libtool
+      - autoconf
+      - git-core
+      - python-dev
+      - libcurl4-nss-dev
+      - libsasl2-dev
+      - libsasl2-modules
+      - maven
+      - libapr1-dev
+      - libsvn-dev
+      - zlib1g-dev
+
+
+

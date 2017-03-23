@@ -1,6 +1,6 @@
 variable "ocean_key" {}
 variable "ocean_ssh_key" {}
-variable "image" {default = "23655862"}
+variable "image" {default = "ubuntu-16-04-x64"}
 provider "digitalocean" {
     token = "${var.ocean_key}"
 }
@@ -11,6 +11,7 @@ resource "digitalocean_droplet" "mesos_master" {
     region = "nyc1"
     size = "512mb"
     ssh_keys = ["${var.ocean_ssh_key}"]
+    user_data = "${file("userdata.sh")}"
 }
 
 resource "digitalocean_floating_ip" "proxy" {

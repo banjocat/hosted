@@ -1,0 +1,72 @@
+---
+
+- name: Allow http ports
+  ufw:
+      rule: allow
+      port: "{{ item }}"
+      proto: tcp
+  with_items:
+      - 80
+      - 443
+      - 8080
+  tags:
+      - nginx
+      - firewall
+
+
+- name: Install nginx
+  apt: name=nginx
+  tags:
+      - nginx
+
+- name: Add htpasswd
+  apt: name=apache2-utils
+  tags:
+      - nginx
+
+- name: Install passlib
+  apt: name=python-passlib
+  tags:
+      - nginx
+
+- name: Add user and password
+  htpasswd:
+      path: /etc/nginx/passwdfile
+      name: "{{ proxy_user }}"
+      password: "{{ proxy_pass }}"
+      owner: root
+      group: www-data
+      mode: 0640
+  notify:
+      - Restart nginx
+  tags:
+      - nginx
+
+- name: Add certbot
+  get_url:
+      url: https://dl.eff.org/certbot-auto
+      dest: /root/certbot-auto
+      mode: 0700
+  tags:
+      - rotate_cert
+      - nginx
+  notify:
+      - Stop nginx
+      - Rotate cert
+      - Start nginx
+
+- name: Add nginx config
+  template:
+      src: templates/nginx.conf
+      dest: /etc/nginx/nginx.conf
+  notify:
+      - Restart nginx
+  tags:
+      - nginx
+
+- name: Confirm nginx started
+  service:
+      name: nginx
+      state: started
+  tags:
+      - nginx

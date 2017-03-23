@@ -1,0 +1,9 @@
+---
+
+- name: Install nginx
+  hosts: nginx
+  vars_files:
+      - ./vault_vars/vault
+  roles:
+      - common
+      - nginx

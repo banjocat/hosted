@@ -1,0 +1,21 @@
+---
+
+- name: Restart nginx
+  service:
+      name: nginx
+      state: restarted
+
+- name: Stop nginx
+  service:
+      name: nginx
+      state: stopped
+
+- name: Rotate cert
+  command: './certbot-auto certonly -q --agree-tos --email {{encrypt_email}} --standalone -d {{proxy_fqdn}}'
+  args:
+      chdir: /root
+
+- name: Start nginx
+  service:
+      name: nginx
+      state: started
