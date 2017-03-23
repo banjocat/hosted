@@ -6,5 +6,4 @@
       - common
       - zookeeper
       - mesos-common
-      - mesos-master
-      - marathon
+      - mesos-agent
