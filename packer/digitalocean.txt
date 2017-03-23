@@ -1,0 +1,1 @@
+--> digitalocean: A snapshot was created: 'mesos-1' (ID: 23655862) in region 'nyc1'
