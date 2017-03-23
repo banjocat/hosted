@@ -18,6 +18,12 @@
   hostname:
       name: "{{host_name}}"
 
+- name: Add hostname to /etc/hosts
+  lineinfile:
+      dest: /etc/hosts
+      regexp: "{{host_name}}"
+      line: 127.0.0.1 {{host_name}}
+
 - name: Install base packages
   apt: name={{item}}
   with_items:

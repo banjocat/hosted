@@ -7,3 +7,11 @@
   tags:
       - mesos
       - marathon
+
+- name: Start marathon
+  service:
+      name: marathon
+      state: started
+  tags:
+      - mesos
+      - marathon

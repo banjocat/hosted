@@ -9,7 +9,7 @@ resource "digitalocean_droplet" "mesos_master" {
     image = "${var.image}"
     name = "mesos_master"
     region = "nyc1"
-    size = "512mb"
+    size = "1gb"
     ssh_keys = ["${var.ocean_ssh_key}"]
     user_data = "${file("userdata.sh")}"
 }

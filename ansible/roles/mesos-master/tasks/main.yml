@@ -1,5 +1,18 @@
 ---
 
+- name: Add quorum
+  copy:
+      dest: /etc/mesos-master/quorum
+      content: 1
+  tags:
+      - mesos
+
+- name: Add workdir
+  copy:
+      dest: /etc/mesos-master/work_dir
+      content: /var/lib/mesos
+  tags:
+      - mesos
 
 - name: Start mesos
   service:
