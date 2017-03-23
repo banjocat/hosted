@@ -2,13 +2,14 @@
 
 - name: Allow http ports
   ufw:
+      insert: 1 # To make sure it always goes before denied
       rule: allow
       port: "{{ item }}"
       proto: tcp
   with_items:
       - 80
       - 443
-      - 8080
+      - 9001
   tags:
       - nginx
       - firewall
@@ -64,9 +65,3 @@
   tags:
       - nginx
 
-- name: Confirm nginx started
-  service:
-      name: nginx
-      state: started
-  tags:
-      - nginx
