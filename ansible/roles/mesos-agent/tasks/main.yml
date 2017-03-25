@@ -1,5 +1,15 @@
 ---
 
+- name: Add containerize options
+  copy:
+      dest: /etc/mesos-slave/containerizers
+      content: mesos,docker
+  notify:
+      - Restart mesos agent
+  tags:
+      - mesos
+
+
 - name: Start mesos agent
   service:
       name: mesos-slave

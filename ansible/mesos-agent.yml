@@ -4,6 +4,5 @@
   hosts: nginx
   roles:
       - common
-      - zookeeper
       - mesos-common
       - mesos-agent
