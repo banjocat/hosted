@@ -1,0 +1,5 @@
+consul_data_dir: /var/lib/consul
+consul_config_dir: /etc/consul
+consul_bind_ip: 127.0.0.1
+consul_http_ip: 127.0.0.1
+consul_dc: digitalocean

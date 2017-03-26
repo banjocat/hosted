@@ -48,4 +48,9 @@
       - zlib1g-dev
 
 
+- name: Update to latest pip
+  pip:
+      name: pip
+      extra_args: --upgrade
+
 

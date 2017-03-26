@@ -1,0 +1,13 @@
+[Unit]
+Description=consul
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/consul agent -bootstrap-expect=1 -ui -config-dir={{consul_config_dir}} -server -datacenter={{consul_dc}} -bind {{consul_bind_ip}} -data-dir {{consul_data_dir}}
+Restart=on-failure
+LimitNOFILE=10000
+
+[Install]
+WantedBy=multi-user.target
+

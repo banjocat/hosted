@@ -1,0 +1,36 @@
+{
+    "services":  [
+        {
+            "name": "nginx",
+            "checks": [
+                {
+                    "name": "Landing page",
+                    "tcp": "localhost:80",
+                    "interval": "10s",
+                    "timeout": "1s"
+                }
+            ]
+        },
+        {
+            "name": "mesos",
+            "checks": [
+                {
+                    "tcp": "localhost:5050",
+                    "interval": "10s",
+                    "timeout": "1s"
+                }
+            ]
+        },
+        {
+            "name": "marathon",
+            "checks": [
+                {
+                    "tcp": "localhost:8080",
+                    "interval": "10s",
+                    "timeout": "1s"
+                }
+            ]
+        }
+    ]
+}
+

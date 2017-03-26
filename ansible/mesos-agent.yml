@@ -6,3 +6,4 @@
       - common
       - mesos-common
       - mesos-agent
+      - consul

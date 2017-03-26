@@ -1,0 +1,55 @@
+---
+
+- name: Install consul
+  unarchive:
+      src: https://releases.hashicorp.com/consul/0.7.5/consul_0.7.5_linux_amd64.zip?_ga=1.200929838.127987819.1489979299
+      dest: /usr/bin
+      remote_src: true
+  notify:
+      - Restart consul
+  tags:
+      - consul
+
+- name: Add consul service
+  template:
+      src: templates/consul.service
+      dest: /etc/systemd/system/consul.service
+      mode: 0444
+  notify:
+      - Restart consul
+  tags:
+      - consul
+
+- name: Create dirs for consul
+  file:
+      dest: "{{item}}"
+      state: directory
+  with_items:
+      - "{{consul_data_dir}}"
+      - "{{consul_config_dir}}"
+  notify:
+      - Restart consul
+  tags:
+      - consul
+
+
+- name: Add configs
+  copy:
+      dest: "{{consul_config_dir}}/{{item}}"
+      src: "templates/{{item}}"
+  tags:
+      - consul
+  notify:
+      - Restart consul
+  with_items:
+      - general.json
+
+- name: Confirm consul is started
+  systemd:
+      name: consul
+      state: started
+  tags:
+      - consul
+
+
+
