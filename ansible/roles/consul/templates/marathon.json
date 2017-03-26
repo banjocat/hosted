@@ -1,0 +1,16 @@
+{
+    "service":
+    {
+        "name": "marathon",
+        "port": 8080,
+        "address": "",
+        "checks": [
+            {
+                "name": "API/UI",
+                "tcp": "localhost:8080",
+                "interval": "10s",
+                "timeout": "1s"
+            }
+        ]
+    }
+}

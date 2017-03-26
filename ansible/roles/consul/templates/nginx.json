@@ -1,0 +1,26 @@
+{
+    "service":
+    {
+        "name": "nginx",
+        "checks": [
+            {
+                "name": "Landing page",
+                "tcp": "localhost:80",
+                "interval": "10s",
+                "timeout": "1s"
+            },
+            {
+                "name": "Marathon",
+                "tcp": "localhost:9001",
+                "interval": "10s",
+                "timeout": "1s"
+            },
+            {
+                "name": "Consul UI",
+                "tcp": "localhost:9002",
+                "interval": "10s",
+                "timeout": "1s"
+            }
+        ]
+    }
+}

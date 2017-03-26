@@ -4,3 +4,8 @@
   systemd:
       name: consul
       state: restarted
+
+- name: Restart dnsmasq
+  service:
+      name: dnsmasq
+      state: restarted

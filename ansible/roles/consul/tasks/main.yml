@@ -10,6 +10,7 @@
   tags:
       - consul
 
+
 - name: Add consul service
   template:
       src: templates/consul.service
@@ -42,7 +43,9 @@
   notify:
       - Restart consul
   with_items:
-      - general.json
+      - mesos.json
+      - nginx.json
+      - marathon.json
 
 - name: Confirm consul is started
   systemd:
@@ -50,6 +53,28 @@
       state: started
   tags:
       - consul
+
+- name: Install dnsmasq
+  apt: name=dnsmasq
+  tags:
+      - consul
+      - dns
+
+- name: Add consul dnsmasq
+  copy:
+      dest: /etc/dnsmasq.d/10-consul
+      content: server=/consul/127.0.0.1#8600
+  tags:
+      - consul
+      - dns
+  notify:
+      - Restart dnsmasq
+
+- name: Confirm dnsmasq is started
+  service:
+      name: dnsmasq
+      state: started
+
 
 
 

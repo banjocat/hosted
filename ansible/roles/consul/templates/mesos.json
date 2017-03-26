@@ -1,0 +1,16 @@
+{
+    "service":  
+    {
+        "name": "mesos",
+        "port": 5050,
+        "address": "",
+        "checks": [
+            {
+                "tcp": "localhost:5050",
+                "interval": "10s",
+                "timeout": "1s"
+            }
+        ]
+    }
+}
+
