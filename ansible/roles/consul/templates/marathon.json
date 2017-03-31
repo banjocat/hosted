@@ -4,6 +4,7 @@
         "name": "marathon",
         "port": 8080,
         "address": "",
+        "tags": ["http", "tcp"],
         "checks": [
             {
                 "name": "API/UI",

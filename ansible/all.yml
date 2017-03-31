@@ -1,6 +1,17 @@
 ---
 
-- include: nginx.yml
-- include: mesos-master.yml
-- include: mesos-agent.yml
-
+- hosts: all
+  gather_facts: no
+  vars_files:
+      - ./vault_vars/vault
+  roles:
+      - common
+      - consul
+      - consul-templates
+      - nginx
+      - zookeeper
+      - mesos-common
+      - mesos-master
+      - marathon
+      - marathon-consul
+      - mesos-agent

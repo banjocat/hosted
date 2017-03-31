@@ -1,0 +1,27 @@
+---
+
+- name: Add marathon-consul key
+  apt_key:
+      url: https://bintray.com/user/downloadSubjectPublicKey?username=allegro
+  tags:
+      - marathon-consul
+
+
+- name: Add marathon-consul repo
+  apt_repository:
+      repo: "deb http://dl.bintray.com/v1/content/allegro/deb /"
+      state: present
+  tags:
+      - marathon-consul
+
+- name: Install marathon-consul
+  apt: name=marathon-consul
+  tags:
+      - marathon-consul
+
+- name: Confirm started
+  service:
+      name: marathon-consul
+      state: started
+  tags:
+      - marathon-consul

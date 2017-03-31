@@ -1,0 +1,67 @@
+---
+
+- name: Get consul template and to /usr/bin
+  unarchive:
+      src: https://releases.hashicorp.com/consul-template/{{consul_template_version}}/consul-template_{{consul_template_version}}_linux_amd64.tgz
+      dest: /usr/bin
+      remote_src: true
+  tags:
+      - template
+  notify:
+      - Restart consul-template
+
+- name: Add consul template config and templates
+  file:
+      dest: "{{item}}"
+      state: directory
+  with_items:
+      - /etc/consul-templates
+      - /etc/consul-templates/templates
+      - /etc/consul-templates/configs
+  tags:
+      - template
+  notify:
+      - Restart consul-template
+
+- name: Add configs
+  template:
+      src: templates/{{item}}.tf
+      dest: /etc/consul-templates/configs/{{item}}.conf
+  with_items:
+      - main
+      - jackmuratore
+  tags:
+      - template
+  notify:
+      - Restart consul-template
+
+- name: Add nginx templates
+  copy:
+      src: files/nginx/{{item}}.ctmpl
+      dest: /etc/consul-templates/templates/{{item}}.ctmpl
+  with_items:
+      - jackmuratore
+  tags:
+      - template
+  notify:
+      - Restart consul-template
+
+- name: Add ssytemd consul-template
+  template:
+      src: templates/consul-template.service
+      dest: /etc/systemd/system/consul-template.service
+      mode: 0440
+  notify:
+      - Reload systemd
+      - Restart consul-template
+  tags:
+      - template
+
+- name: Confirm started
+  service:
+      name: consul-template
+      state: started
+  tags:
+      - template
+
+

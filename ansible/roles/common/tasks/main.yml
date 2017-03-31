@@ -46,6 +46,8 @@
       - libapr1-dev
       - libsvn-dev
       - zlib1g-dev
+      - zip
+      - tree
 
 
 - name: Update to latest pip

@@ -1,0 +1,9 @@
+---
+
+- name: Reload systemd
+  command: /bin/systemctl daemon-reload
+
+- name: Restart consul-template
+  service:
+      name: consul-template
+      state: restarted

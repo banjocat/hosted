@@ -31,6 +31,18 @@ resource "digitalocean_record" "proxy" {
     value = "${digitalocean_floating_ip.proxy.ip_address}"
 }
 
+resource "digitalocean_domain" "jack" {
+    name = "jackmuratore.com"
+    ip_address = "${digitalocean_floating_ip.proxy.ip_address}"
+}
+
+resource "digitalocean_record" "jack" {
+    domain = "${digitalocean_domain.jack.name}"
+    type = "A"
+    name = "www"
+    value = "${digitalocean_floating_ip.proxy.ip_address}"
+}
+
 output "proxy_fqdn" {
     value = "${digitalocean_record.proxy.fqdn}"
 }

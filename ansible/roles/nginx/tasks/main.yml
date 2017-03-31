@@ -16,10 +16,8 @@
       - firewall
 
 
-- name: Install nginx
+- name: Remove nginx packages
   apt: name=nginx
-  tags:
-      - nginx
 
 - name: Add htpasswd
   apt: name=apache2-utils
@@ -38,7 +36,7 @@
       password: "{{ proxy_pass }}"
       owner: root
       group: www-data
-      mode: 0640
+      mode: 0660
   notify:
       - Restart nginx
   tags:
@@ -48,7 +46,7 @@
   get_url:
       url: https://dl.eff.org/certbot-auto
       dest: /root/certbot-auto
-      mode: 0700
+      mode: 0500
   tags:
       - rotate_cert
       - nginx
@@ -61,8 +59,11 @@
   template:
       src: templates/nginx.conf
       dest: /etc/nginx/nginx.conf
+      mode: 0440
   notify:
       - Restart nginx
   tags:
       - nginx
+      - nginx-config
+
 
