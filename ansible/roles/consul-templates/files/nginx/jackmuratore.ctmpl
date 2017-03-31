@@ -3,6 +3,7 @@ upstream jack {
     server 127.0.0.1:{{.Port}};{{end}}
 }
 
+
 server {
     server_name jackmuratore.com www.jackmuratore.com;
     ssl off;
@@ -12,3 +13,4 @@ server {
         proxy_pass http://jack;
     }
 }
+

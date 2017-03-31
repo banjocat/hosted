@@ -24,11 +24,10 @@
       - Restart consul-template
 
 - name: Add configs
-  template:
-      src: templates/{{item}}.tf
+  copy:
+      src: files/{{item}}.tf
       dest: /etc/consul-templates/configs/{{item}}.conf
   with_items:
-      - main
       - jackmuratore
   tags:
       - template
