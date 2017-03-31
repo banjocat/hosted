@@ -3,12 +3,16 @@ upstream jack {
     server 127.0.0.1:{{.Port}};{{end}}
 }
 
+server {
+    server_name jackmuratore.com www.jackmuratore.com;
+    listen 443;
+    return 301 http://$host/$request_uri;
+}
 
 server {
     server_name jackmuratore.com www.jackmuratore.com;
     ssl off;
     listen 80;
-    listen 443;
     location / {
         proxy_pass http://jack;
     }
