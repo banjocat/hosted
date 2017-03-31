@@ -1,3 +1,1 @@
-consul {
-    pid_file = "/var/run/consul-template.pid"
-}
+pid_file = "/var/run/consul-template.pid"

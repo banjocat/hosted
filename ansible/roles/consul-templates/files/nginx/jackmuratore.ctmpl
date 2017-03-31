@@ -1,11 +1,13 @@
 upstream jack {
     {{ range service "jackmuratore" }}
-    server {{ .Name }}.service.consul:{{.Port}}{{end}}
+    server 127.0.0.1:{{.Port}};{{end}}
 }
 
 server {
+    server_name jackmuratore.com www.jackmuratore.com;
+    ssl off;
     listen 80;
-    server_name jackmuratore.com www.jackmuratore.com
+    listen 443;
     location / {
         proxy_pass http://jack;
     }
