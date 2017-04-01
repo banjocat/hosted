@@ -1,5 +1,5 @@
 nginx_version: 1.11.12
-nginx_sbin: /usr/sbin/nginx
+nginx_sbin: /usr/local/sbin/nginx
 nginx_conf: /etc/nginx
 nginx_pid: /run/nginx.pid
 

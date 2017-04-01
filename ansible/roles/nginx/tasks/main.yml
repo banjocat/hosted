@@ -15,9 +15,74 @@
       - nginx
       - firewall
 
-- name: Add mainline nginx ppa
+- name: Get required tars
+  unarchive:
+      src: "{{item}}"
+      dest: /opt
+      remote_src: yes
+  with_items:
+      - ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.gz
+      - http://zlib.net/zlib-1.2.11.tar.gz
+      - http://www.openssl.org/source/openssl-1.0.2f.tar.gz
+      - http://nginx.org/download/nginx-{{nginx_version}}.tar.gz 
+
+- name: Link to /opt/nginx
+  file:
+      src: /opt/nginx-{{nginx_version}}
+      dest: /opt/nginx
+      state: link
+
+- name: Configure pcre and zlib
+  command: ./configure
+  args:
+      chdir: /opt/{{item}}
+  with_items:
+      - pcre-8.40
+      - zlib-1.2.11
+
+- name: Configure ssl
+  command: ./config --prefix=/usr
+  args:
+      chdir: /opt/openssl-1.0.2f
+
+- name: Compile all prereqs
+  make:
+      target: install
+      chdir: /opt/{{item}}
+  with_items:
+      - pcre-8.40
+      - zlib-1.2.11
+      - openssl-1.0.2f
+
+- name: Configure nginx
+  command: ./configure \
+      --sbin-path={{nginx_sbin}} \
+      --conf-path={{nginx_conf}}/nginx.conf \
+      --pid-path={{nginx_pid}} \
+      --with-pcre=../pcre-8.40 \
+      --with-zlib=../zlib-1.2.11 \
+      --with-http_ssl_module \
+      --with-stream_ssl_preread_module \
+      --with-stream \
+      --with-mail=dynamic
+  args:
+      chdir: /opt/nginx
+  tags:
+      - compile-nginx
+
+- name: Compile nginx
+  make:
+      target: install
+      chdir: /opt/nginx
+  tags:
+      - compile-nginx
+
+
+
+- name: Remove mainline nginx ppa
   apt_repository:
       repo: 'ppa:nginx/development'
+      state: absent
   tags:
       - nginx
 
@@ -25,9 +90,19 @@
 - name: Add nginx packages
   apt:
       name: nginx
-      state: latest
+      state: absent
   tags:
       - nginx
+
+- name: Add nginx.service
+  template:
+      src: templates/nginx.service
+      dest: /etc/systemd/system/nginx.service
+  tags:
+      - nginx
+  notify:
+      - Reload systemd
+      - Restart nginx
 
 - name: Add htpasswd
   apt: name=apache2-utils
