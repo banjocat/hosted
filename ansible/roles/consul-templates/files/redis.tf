@@ -1,6 +1,7 @@
 template {
-  source = "/etc/consul-templates/templates/jackmuratore.ctmpl"
-  destination = "/etc/nginx/conf.d/http/jackmuratore.conf"
+  source = "/etc/consul-templates/templates/redis.ctmpl"
+  destination = "/etc/nginx/conf.d/tcp/redis.conf"
+  #destination = "/tmp/redis.conf"
   command = "systemctl reload nginx"
   command_timeout = "60s"
   perms = 0660

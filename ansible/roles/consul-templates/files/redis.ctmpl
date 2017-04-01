@@ -1,0 +1,20 @@
+stream {
+    map $ssl_preread_server_name $name {
+        {{ range services }} {{if in .Tags "redis"}}
+        {{ range service .Name }}
+        {{.Name}}.giantdino.com {{.Name}}_backend;
+        {{end}}{{end}}{{end}}
+    }
+    
+    {{ range services }} {{if in .Tags "redis"}}
+    {{ range service .Name }}
+    upstream {{.Name}}_backend {
+        server {{.Address}}:{{.Port}};
+    }{{end}}{{end}}{{end}}
+
+    server {
+        listen 6379;
+        proxy_pass $name;
+    }
+}
+

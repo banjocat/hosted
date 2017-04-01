@@ -29,6 +29,7 @@
       dest: /etc/consul-templates/configs/{{item}}.conf
   with_items:
       - jackmuratore
+      - redis
   tags:
       - template
   notify:
@@ -36,10 +37,11 @@
 
 - name: Add nginx templates
   copy:
-      src: files/nginx/{{item}}.ctmpl
+      src: files/{{item}}.ctmpl
       dest: /etc/consul-templates/templates/{{item}}.ctmpl
   with_items:
       - jackmuratore
+      - redis
   tags:
       - template
   notify:
