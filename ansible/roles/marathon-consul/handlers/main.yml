@@ -1,0 +1,6 @@
+---
+
+- name: Restart marathon-consul
+  service:
+      name: marathon-consul
+      state: restarted

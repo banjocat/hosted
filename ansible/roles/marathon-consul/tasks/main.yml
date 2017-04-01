@@ -19,6 +19,15 @@
   tags:
       - marathon-consul
 
+- name: Add config
+  copy:
+      src: files/config.json
+      dest: /etc/marathon-consul.d/config.json
+  notify:
+      - Restart marathon-consul
+  tags:
+      - marathon-consul
+
 - name: Confirm started
   service:
       name: marathon-consul
